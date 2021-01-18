@@ -5,6 +5,8 @@ if __name__ == "__main__":
     end_time = input("Enter the ending time(HH:MM AM/PM): ").strip()
     priority = input("Enter the priority(start|middle|end): ").strip().lower()
     
+
+
     # To avoid showing debuging message while entering above inputs 
     # import statements are moved down here.
     from bot import login
@@ -15,16 +17,45 @@ if __name__ == "__main__":
 
     login(user_name, password)
     #comment out the unnecessary registration
-    register_for_listening(start_time, end_time, priority, password)
+    # register_for_listening(start_time, end_time, priority, password)
     register_for_speaking(start_time, end_time, priority, password)
-    register_for_reading(start_time, end_time, priority, password)
-    register_for_writing(start_time, end_time, priority, password)
+    #register_for_reading(start_time, end_time, priority, password)
+    #register_for_writing(start_time, end_time, priority, password)
 
 
 """
+Iftakhar
 HZ15365
 AS65
+08:00 AM
+01:00 PM
+start
+
+Akib
+HZ15698
+AS98
 01:00 AM
 01:00 PM
-end
+start
+
+Botli
+HZ15625
+AS25
+01:00 AM
+01:00 PM
+start
+
+Sayma
+HZ15629
+AS29
+01:00 AM
+05:30 PM
+start
+
+Naeem
+HZ15626
+AS26
+10:00 AM
+05:30 PM
+start
 """

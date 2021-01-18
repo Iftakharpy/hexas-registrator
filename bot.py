@@ -36,6 +36,7 @@ text_to_compare_with = "Welcome"
 #urls for regristration
 listening_registration_url = "http://appsznd.hexaszindabazar.com/listening.php"
 speaking_registration_url = "http://appsznd.hexaszindabazar.com/speaking.php"
+speaking_registration_url = "file:///D:/Hexas/HEXA'S%20Student%20Management%20System.html"
 reading_registration_url = "http://appsznd.hexaszindabazar.com/reading.php"
 writing_registration_url = "http://appsznd.hexaszindabazar.com/writing.php"
 #registrations time locator
@@ -143,6 +144,7 @@ def register_for_speaking(
     reload_until_element_located(reg_url, "//input[@name='type' and @value='Academic']")
     DRIVER.find_element_by_xpath("//input[@name='type' and @value='Academic']").click()
     DRIVER.find_element_by_xpath("//input[@id='pass']").send_keys(password)
+    DRIVER.find_element_by_xpath("//input[@name='type' and @value='Academic']").click()
     DRIVER.find_element_by_xpath("//button[@id='apply']").click()
     try:
         WebDriverWait(DRIVER, 30).until(EC.alert_is_present())
@@ -182,8 +184,3 @@ def register_for_listening(
         registration_time_locator = element_xpath_to_locate_registration_time
             ):
     register_for_speaking(start_time, end_time, priority, password, url, registration_time_locator)
-
-
-# login("HZ15365", "AS65")
-# register_for_speaking("01:00 AM", "01:00 PM", "end", "AS65")
-# DRIVER.close()
