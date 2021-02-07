@@ -126,7 +126,8 @@ def register_for_speaking(
         priority = "start|middle|end",
         password = "",
         url = speaking_registration_url,
-        registration_time_locator = element_xpath_to_locate_registration_time
+        registration_time_locator = element_xpath_to_locate_registration_time,
+        wait_for_alert = 5 #seconds
             ):
     """
     Format: "HH:MM PM/AM"
@@ -136,9 +137,13 @@ def register_for_speaking(
     start_time = datetime.strptime(start_time.upper(), TIME_FORMAT)
     end_time = datetime.strptime(end_time.upper(), TIME_FORMAT)
     priority = priority.lower()
-    reload_until_element_located(url, registration_time_locator)
-    reg_item = get_registration_item(start_time, end_time, priority)
-    reg_url = reg_item[0].find_element_by_xpath("td/a").get_attribute("href")
+    
+    while True:
+        reload_until_element_located(url, registration_time_locator)
+        reg_item = get_registration_item(start_time, end_time, priority)
+        if reg_item:
+            reg_url = reg_item[0].find_element_by_xpath("td/a").get_attribute("href")
+            break
 
     #register for the test
     reload_until_element_located(reg_url, "//input[@name='type' and @value='Academic']")
@@ -147,7 +152,7 @@ def register_for_speaking(
     DRIVER.find_element_by_xpath("//input[@name='type' and @value='Academic']").click()
     DRIVER.find_element_by_xpath("//button[@id='apply']").click()
     try:
-        WebDriverWait(DRIVER, 30).until(EC.alert_is_present())
+        WebDriverWait(DRIVER, wait_for_alert).until(EC.alert_is_present())
         alert_obj = DRIVER.switch_to_alert()
         print(alert_obj.text)
         alert_obj.accept()
