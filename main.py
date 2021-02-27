@@ -1,61 +1,76 @@
+from bot import Bot
+import threading
+
+default_delimeter = ','
+
+
+def make_creedential_tuples(user_names, passwords, delimeter=','):
+    # parse usernames
+    user_names = user_names.split(delimeter)
+    user_names = map(lambda user_name: user_name.strip().upper(),
+                    user_names)
+    # parse passwords
+    passwords = passwords.split(delimeter)
+    passwords = map(lambda password: password.strip().upper(),
+                    passwords)
+    return zip(user_names, passwords)
+
+def register_for_exam(*args, **kwargs):
+    bot = Bot(*args, **kwargs)
+
+def main(credential_iterator, start_time='10:00 AM', end_time='05:00 PM', priority='middle', register_for='speaking'):
+    threads = []
+    # preparing threads
+    for creed in credential_iterator:
+        thread = threading.Thread(target=register_for_exam, args=(*creed, start_time, end_time, priority, register_for), daemon=True)
+        threads.append(thread)
+    
+    # starting threads
+    for th in threads:
+        th.start()
+    
+    # waiting for threads to finish
+    for th in threads:
+        th.join()
+
+
 if __name__ == "__main__":
-    user_name = input("Enter the Hexas ID: ").strip()
-    password = input("Enter the Password: ").strip()
+    delimeter = input(f"Enter separator delimeter(defalut='{default_delimeter}'): ").strip()
+    if not delimeter:
+        delimeter = default_delimeter
+    user_names = input(f"Enter the Hexas IDs(delimeter={delimeter}): ").strip()
+    passwords = input(f"Enter the Passwords(delimeter={delimeter}): ").strip()
     start_time = input("Enter the starting time(HH:MM AM/PM): ").strip()
     end_time = input("Enter the ending time(HH:MM AM/PM): ").strip()
     priority = input("Enter the priority(start|middle|end): ").strip().lower()
+    register_for = input("Enter the module(listening|speaking|reading|writing) you want to register for: ").strip().lower()
+
+    credentials = make_creedential_tuples(user_names, passwords)
+    main(credentials, start_time, end_time, priority, register_for)
     
 
-
-    # To avoid showing debuging message while entering above inputs 
-    # import statements are moved down here.
-    from bot import login
-    from bot import register_for_listening
-    from bot import register_for_speaking
-    from bot import register_for_reading
-    from bot import register_for_writing
-
-    login(user_name, password)
-    #comment out the unnecessary registration
-    # register_for_listening(start_time, end_time, priority, password)
-    register_for_speaking(start_time, end_time, priority, password)
-    #register_for_reading(start_time, end_time, priority, password)
-    #register_for_writing(start_time, end_time, priority, password)
-
-
 """
-Iftakhar
-HZ15365
-AS65
-08:00 AM
-01:00 PM
-start
+Delimeter: ,
+IDs: HZ15626, HZ15365, HZ15698, HZ15625, HZ15629
+Passwords: AS26, AS65, AS98, AS25, AS29
+Start: 09:00 AM
+End: 05:00 PM
+Priority: middle
+Register for: speaking
 
-Akib
-HZ15698
-AS98
-01:00 AM
-01:00 PM
-start
+,
+HZ15626, HZ15365, HZ15698, HZ15625, HZ15629
+AS26, AS65, AS98, AS25, AS29
+09:00 AM
+05:00 PM
+middle
+speaking
 
-Botli
-HZ15625
-AS25
-01:00 AM
-01:00 PM
-start
-
-Sayma
-HZ15629
-AS29
-01:00 AM
-05:30 PM
-start
-
-Naeem
-HZ15626
-AS26
-10:00 AM
-05:30 PM
-start
+,
+HZ15626, HZ15365
+AS26, AS65
+09:00 AM
+05:00 PM
+middle
+speaking
 """
