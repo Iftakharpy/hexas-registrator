@@ -39,7 +39,7 @@ text_to_compare_with = "Welcome"
 #urls for regristration
 listening_registration_url = "http://appsznd.hexaszindabazar.com/listening.php"
 speaking_registration_url = "http://appsznd.hexaszindabazar.com/speaking.php"
-speaking_registration_url = "file:///D:/Hexas/HEXA'S%20Student%20Management%20System.html" # testing link
+# speaking_registration_url = "file:///D:/Hexas/HEXA'S%20Student%20Management%20System.html" # testing link
 reading_registration_url = "http://appsznd.hexaszindabazar.com/reading.php"
 writing_registration_url = "http://appsznd.hexaszindabazar.com/writing.php"
 #registrations time locator
